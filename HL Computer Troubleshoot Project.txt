@@ -1,0 +1,47 @@
+HL Computer Troubleshoot Project
+
+CHECK-IN PROCESS
+There will be two sides of the check-in form, front and back. 
+
+For the front, there will be areas for the front-end technicians to fill out including but not limited to: Name/Company, Cell/Home/Work Phone Number, Operating System Password/Pin, Zip Code, Problem, Initial Estimate of Cost, and PC Identification.
+
+For the back, there will be areas for the back-end technicians to fill out including but not limited to: CPU, RAM, Operating System, Storage Devices, Security Software, Productivity Software, and Device Manager Issues.
+
+CLARIFICATION
+Now, I will elaborate what each of these categories mean for the technicians. 
+
+For the front side of check-in form, there is no need for further elaboration, but I will provide examples for each category below.
+
+Name/Company: Lennox Nguyen/Micro Center
+Cell/Home/Work Phone Number: 770-897-7989
+Operating System Password/PIN: Berries123, 3320
+Zip Code: 30087
+Problem: Virus, Important Data
+Initial Estimate of Cost: $135 for Virus Removal + $85 for Data Backup
+System: Custom Gaming Desktop
+
+For the back side of check-in form, there is some further elaboration and I will provide examples as well.
+
+CPU (Brand, Modifier, Generation, SKU, Product Line, Speed):
+Intel i7-11700K @4.3GHz
+
+RAM (Total GB, Type of PC, Number of Slots):
+16GB RAM (Laptop, 2 slots)
+
+Operating System (Name, Edition, Version, OS Build):
+Windows 10 Home v22H2
+
+Storage Devices (Total Capacity, Type, Capacity Used, Partitions):
+1TB HDD (Used: 500GB, C: Drive: 150GB, D: Drive: 350GB)
+
+Security Software (Name, Edition):
+Malwarebytes Free, CCleaner Pro
+
+Productivity Software (Name, Edition):
+Microsoft Office 2016, Adobe Acrobat Pro
+
+Device Manager Issues:
+"Unknown Device" disabled
+
+DATASETS
+For the project, I will create pre-loaded datasets for problems, repair costs, desktop/mobile CPUs, operating systems, security and productivity software. However, the customer list will also be pre-loaded and then allowed for manual entries and automated modifications.
