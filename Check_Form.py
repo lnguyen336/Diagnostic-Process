@@ -102,25 +102,25 @@ if computer_check.lower() == "yes":
         # For each component of the computer information list, the inputs have the technician enter the information
         # For each component of the computer information list, the inputs will be added to each component's list
 
-        cpu = input(f"\nCPU (Brand, Modifier, Generation, SKU, Product Line, Speed): ")
+        cpu = input(f"\nCPU (Brand, Modifier, Generation, SKU, Product Line, Speed): ") or default
         cpu_list.append(cpu)
 
-        ram = input("RAM (Total GB, Type of PC, Number of Slots): ")
+        ram = input("RAM (Total GB, Type of PC, Number of Slots): ") or default
         ram_list.append(ram)
 
-        os = input("Operating System (Name, Edition, Version, OS Build): ")
+        os = input("Operating System (Name, Edition, Version, OS Build): ") or default
         os_list.append(os)
 
-        storage_drives = input("Storage Drives (Total Capacity, Type, Capacity Used, Partitions): ")
+        storage_drives = input("Storage Drives (Total Capacity, Type, Capacity Used, Partitions): ") or default
         storage_drive_list.append(storage_drives)
 
-        security_soft = input("Security Software (Name, Edition): ")
+        security_soft = input("Security Software (Name, Edition): ") or default
         security_soft_list.append(security_soft)
 
-        product_soft = input("Productivity Software (Name, Edition): ")
+        product_soft = input("Productivity Software (Name, Edition): ") or default
         product_soft_list.append(product_soft)
 
-        system_issue = input("\nFor Windows, list any device manager issues. \nFor MacOS, list any Settings issues. \nFor other OS, list the issues: ")
+        system_issue = input("\nFor Windows, list any device manager issues. \nFor MacOS, list any Settings issues. \nFor other OS, list the issues: ") or default
         system_issue_list.append(system_issue)
 
         # Add each sublist element to the initial computer specifications input list
