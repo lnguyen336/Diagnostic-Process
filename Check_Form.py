@@ -68,18 +68,14 @@ while repeat.lower() == "no":
     for lst in (name_list, company_list, cell_phone_list, other_phone_list, os_password_list, os_pin_list, zip_code_list,
                  problem_list, initial_estimate_list, system_list):
         initial_customer_list.append(lst)
+    print(initial_customer_list)
 
     # Ask the technician to verify the current customer information criteria
     repeat = input("\nIs the following information above correct?\n\nEnter 'no' to redo the customer information input, anything else to move on: ")
 
-    # Get the last element of each sublist from the multiple customer information input lists
-    last_elements = []
-    for sublist in initial_customer_list:
-        last_elements.append(sublist[len(sublist)-1])
-
 # Display the final customer information input list as a dataframe
 print(f"\nFinal Customer Information Table: ")
-customer_info_df = pd.DataFrame(last_elements, index = ['Customer Name', 'Company', 'Cell Phone Number', 'Other Phone Number',
+customer_info_df = pd.DataFrame(initial_customer_list, index = ['Customer Name', 'Company', 'Cell Phone Number', 'Other Phone Number',
                                                         'Login Password', 'Login PIN', 'Zip Code', 'Problem', 'Initial Estimate',
                                                         'System'], columns = ['Most Recent Customer'])
 print(customer_info_df)
@@ -132,13 +128,8 @@ if computer_check.lower() == "yes":
         # Ask the technician to verify the current computer specifications criteria
         repeat_2 = input("\nIs the following information above correct?\n\nEnter 'no' to redo the computer information input, anything else to move on: ")
 
-        # Get the last element of each sublist from the multiple computer information input lists
-        final_elements = []
-        for sublist in initial_computer_list:
-            final_elements.append(sublist[-1])
-
     # Display the final computer specifications input list as a dataframe
     print(f"\nFinal Computer Information Table: ")
-    computer_info_df = pd.DataFrame(final_elements, index = ['CPU', 'RAM', 'Operating System', 'Storage Drive Info', 'Security Software',
+    computer_info_df = pd.DataFrame(initial_computer_list, index = ['CPU', 'RAM', 'Operating System', 'Storage Drive Info', 'Security Software',
                                                             'Productivity Software', 'System Issues'], columns = ['Most Recent Computer'])
     print(computer_info_df)
