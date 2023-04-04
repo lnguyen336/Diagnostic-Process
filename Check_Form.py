@@ -84,6 +84,7 @@ customer_info_df = pd.DataFrame(last_elements, index = ['Customer Name', 'Compan
                                                         'System'], columns = ['Most Recent Customer'])
 print(customer_info_df)
 
+# Ask the technician to verify that they can turn on the computer and see the desktop screen to input the computer information
 computer_check = input("\n\nCan you turn on the computer and see the desktop screen? Enter 'yes' to input the computer information: ")
 if computer_check.lower() == "yes":
     while repeat_2.lower() == "no":
