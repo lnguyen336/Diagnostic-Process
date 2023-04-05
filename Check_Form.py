@@ -4,6 +4,7 @@
 
 # Import dependencies
 import pandas as pd
+import os
 
 # Print Title
 print("Technician Diagnostic Check-In Form!")
@@ -77,8 +78,9 @@ while repeat.lower() == "no":
 print(f"\nFinal Customer Information Table: ")
 customer_info_df = pd.DataFrame(initial_customer_list, index = ['Customer Name', 'Company', 'Cell Phone Number', 'Other Phone Number',
                                                         'Login Password', 'Login PIN', 'Zip Code', 'Problem', 'Initial Estimate',
-                                                        'System'], columns = ['Most Recent Customer'])
-print(customer_info_df)
+                                                        'System'])
+client_info_df = customer_info_df.transpose()
+print(client_info_df)
 
 # Ask the technician to verify that they can turn on the computer and see the desktop screen to input the computer information
 computer_check = input("\n\nCan you turn on the computer and see the desktop screen? Enter 'yes' to input the computer information: ")
@@ -129,7 +131,26 @@ if computer_check.lower() == "yes":
         repeat_2 = input("\nIs the following information above correct?\n\nEnter 'no' to redo the computer information input, anything else to move on: ")
 
     # Display the final computer specifications input list as a dataframe
-    print(f"\nFinal Computer Information Table: ")
+    print("\nFinal Computer Information Table: ")
     computer_info_df = pd.DataFrame(initial_computer_list, index = ['CPU', 'RAM', 'Operating System', 'Storage Drive Info', 'Security Software',
-                                                            'Productivity Software', 'System Issues'], columns = ['Most Recent Computer'])
-    print(computer_info_df)
+                                                            'Productivity Software', 'System Issues'])
+    pc_info_df = computer_info_df.transpose()
+    print(pc_info_df)
+
+# Merge the two dataframes if the technician obtained the customer information and computer information
+# If not, the final dataframe will just be the customer information
+try:
+    final_df = pd.concat([client_info_df, pc_info_df], axis = "columns")
+    print("\n\nFinal DataFrame: ")
+    print(f'{final_df}')
+except NameError:
+    print("\n\nFinal DataFrame: ")
+    final_df = client_info_df
+    print(f'{final_df}')
+
+# First, save the final dataframe as a CSV file
+# If CSV file is already written, append the new final dataframe to the existing CSV file
+if not os.path.exists('D:\Personal Projects\Personal Work\Diagnostic Process\CheckForm_Logs.csv'):
+    final_df.to_csv("D:\Personal Projects\Personal Work\Diagnostic Process\CheckForm_Logs.csv", header = "columns", index = False)
+else:
+    final_df.to_csv("D:\Personal Projects\Personal Work\Diagnostic Process\CheckForm_Logs.csv", mode = 'a', header = False, index = False)
