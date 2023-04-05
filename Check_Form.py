@@ -4,7 +4,7 @@
 
 # Import dependencies
 import pandas as pd
-import os
+from os import path
 
 # Print Title
 print("Technician Diagnostic Check-In Form!")
@@ -69,7 +69,6 @@ while repeat.lower() == "no":
     for lst in (name_list, company_list, cell_phone_list, other_phone_list, os_password_list, os_pin_list, zip_code_list,
                  problem_list, initial_estimate_list, system_list):
         initial_customer_list.append(lst)
-    print(initial_customer_list)
 
     # Ask the technician to verify the current customer information criteria
     repeat = input("\nIs the following information above correct?\n\nEnter 'no' to redo the customer information input, anything else to move on: ")
@@ -80,6 +79,16 @@ customer_info_df = pd.DataFrame(initial_customer_list, index = ['Customer Name',
                                                         'Login Password', 'Login PIN', 'Zip Code', 'Problem', 'Initial Estimate',
                                                         'System'])
 client_info_df = customer_info_df.transpose()
+
+# Add columns from computer_information dataframe to client_info_df and put the default value as 'TBA'
+client_info_df['CPU'] = 'TBA'
+client_info_df['RAM'] = 'TBA'
+client_info_df['Operating System'] = 'TBA'
+client_info_df['Storage Drive Info'] = 'TBA'
+client_info_df['Security Software'] = 'TBA'
+client_info_df['Productivity Software'] = 'TBA'
+client_info_df['System Issues'] = 'TBA'
+
 print(client_info_df)
 
 # Ask the technician to verify that they can turn on the computer and see the desktop screen to input the computer information
@@ -150,7 +159,7 @@ except NameError:
 
 # First, save the final dataframe as a CSV file
 # If CSV file is already written, append the new final dataframe to the existing CSV file
-if not os.path.exists('D:\Personal Projects\Personal Work\Diagnostic Process\CheckForm_Logs.csv'):
+if not path.exists('D:\Personal Projects\Personal Work\Diagnostic Process\CheckForm_Logs.csv'):
     final_df.to_csv("D:\Personal Projects\Personal Work\Diagnostic Process\CheckForm_Logs.csv", header = "columns", index = False)
 else:
     final_df.to_csv("D:\Personal Projects\Personal Work\Diagnostic Process\CheckForm_Logs.csv", mode = 'a', header = False, index = False)
