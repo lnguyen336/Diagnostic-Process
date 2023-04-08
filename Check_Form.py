@@ -128,7 +128,7 @@ client_info_df = pd.DataFrame(initial_check_list, index = ['Customer Name', 'Com
                                                         'Productivity Software', 'System Issues'])
 check_info_df = client_info_df.transpose()
 
-print(check_info_df)
+print(customer_info_df)
 
 # Ask the technician to verify that they can turn on the computer and see the desktop screen to input the computer information
 computer_check = input("\n\nCan you turn on the computer and see the desktop screen? Enter 'yes' to input the computer information: ")
