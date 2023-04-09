@@ -16,6 +16,7 @@ print("Technician Check Form Log Modification!")
 repeat = "yes"
 
 # Read the existing CSV file
+# Change the file path on YOUR COMPUTER!
 first_df = pd.read_csv('D:\Personal Projects\Personal Work\Diagnostic Process\CheckForm_Logs.csv')
 
 # Additional Variables
@@ -62,5 +63,6 @@ while repeat.lower() == "yes":
     repeat = input("\nIs the following information above correct?\n\nEnter 'yes' to update another column value/data, anything else to stop: ")
 
 # Writing into the file
+# Change the file path on YOUR COMPUTER!
 first_df.to_csv('D:\Personal Projects\Personal Work\Diagnostic Process\CheckForm_Logs.csv', index = False)
 
