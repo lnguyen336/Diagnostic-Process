@@ -15,9 +15,13 @@ print("Technician Check Form Log Modification!")
 # Variables to control the loops below
 repeat = "yes"
 
+# Additional Variables
+# Replace the file path with your OWN file path on your PC
+file_path = 'D:\Personal Projects\Personal Work\Diagnostic Process\CheckForm_Logs.csv'
+
 # Read the existing CSV file
 # Change the file path on YOUR COMPUTER!
-first_df = pd.read_csv('D:\Personal Projects\Personal Work\Diagnostic Process\CheckForm_Logs.csv')
+first_df = pd.read_csv(file_path)
 
 # Additional Variables
 num_list = first_df.index.values.tolist()
@@ -36,7 +40,7 @@ while repeat.lower() == "yes":
         csv_row = int(input("\nWhich row is your column value in? (The header is not the first row & row number starts from 0): "))
 
         # Validate the csv_row
-        if csv_row not in arr:
+        while csv_row not in arr:
 
             # Display an error, then get another input
             csv_row = int(input("\nInvalid Choice.\nWhich row is your column value in? (The header is not the first row & row number starts from 0): "))
@@ -68,6 +72,4 @@ while repeat.lower() == "yes":
     repeat = input("\nIs the following information above correct?\n\nEnter 'yes' to update another column value/data, anything else to stop: ")
 
 # Writing into the file
-# Change the file path on YOUR COMPUTER!
-first_df.to_csv('D:\Personal Projects\Personal Work\Diagnostic Process\CheckForm_Logs.csv', index = False)
-
+first_df.to_csv(file_path, index = False)

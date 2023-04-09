@@ -4,6 +4,7 @@
 
 # Import dependencies
 import pandas as pd
+import os
 from os import path
 
 # Print Title
@@ -16,6 +17,10 @@ repeat_2 = "no"
 # Additional Variables
 default = "N/A"
 default_2 = "TBA"
+file_name = "CheckForm_Logs.csv"
+
+# Replace the file path with your OWN file path on your PC
+file_path = f'D:\Personal Projects\Personal Work\Diagnostic Process\{file_name}'
 
 while repeat.lower() == "no":
     # Customer Information Lists
@@ -83,14 +88,15 @@ while repeat.lower() == "no":
     system_issue_list = []
     initial_check_list = []
 
+    # Add the default_2 value ("TBA") to these computer specification lists
     cpu = default_2
     cpu_list.append(cpu)
 
     ram = default_2
     ram_list.append(ram)
 
-    os = default_2
-    os_list.append(os)
+    operate_system = default_2
+    os_list.append(operate_system)
 
     storage_drives = default_2
     storage_drive_list.append(storage_drives)
@@ -113,7 +119,6 @@ while repeat.lower() == "no":
     # Ask the technician to verify the current customer information criteria
     repeat = input("\nIs the following information above correct?\n\nEnter 'no' to redo the customer information input, anything else to move on: ")
 
-# Display the final customer information input list as a dataframe
 # If the technician obtained customer information and can turn on the computer and see the desktop screen, this dataframe will be merged with pc_info_df
 print(f"\nFinal Customer Information Table: ")
 customer_df = pd.DataFrame(initial_customer_list, index = ['Customer Name', 'Company', 'Cell Phone Number', 'Other Phone Number',
@@ -128,6 +133,7 @@ client_info_df = pd.DataFrame(initial_check_list, index = ['Customer Name', 'Com
                                                         'Productivity Software', 'System Issues'])
 check_info_df = client_info_df.transpose()
 
+# Display the final customer information input list as a dataframe
 print(customer_info_df)
 
 # Ask the technician to verify that they can turn on the computer and see the desktop screen to input the computer information
@@ -154,8 +160,8 @@ if computer_check.lower() == "yes":
         ram = input("RAM (Total GB, Type of PC, Number of Slots): ") or default
         ram_list.append(ram)
 
-        os = input("Operating System (Name, Edition, Version, OS Build): ") or default
-        os_list.append(os)
+        operate_system = input("Operating System (Name, Edition, Version, OS Build): ") or default
+        os_list.append(operate_system)
 
         storage_drives = input("Storage Drives (Total Capacity, Type, Capacity Used, Partitions): ") or default
         storage_drive_list.append(storage_drives)
@@ -177,12 +183,13 @@ if computer_check.lower() == "yes":
         # Ask the technician to verify the current computer specifications criteria
         repeat_2 = input("\nIs the following information above correct?\n\nEnter 'no' to redo the computer information input, anything else to move on: ")
 
-    # Display the final computer specifications input list as a dataframe
+    # If the technician obtained customer information and can turn on the computer and see the desktop screen, this dataframe will be merged with customer_info_df
     print("\nFinal Computer Information Table: ")
     computer_info_df = pd.DataFrame(initial_computer_list, index = ['CPU', 'RAM', 'Operating System', 'Storage Drive Info', 'Security Software',
                                                             'Productivity Software', 'System Issues'])
     pc_info_df = computer_info_df.transpose()
 
+    # Display the final computer information input list as a dataframe
     print(pc_info_df)
 
 # Merge the two dataframes if the technician obtained the customer information and computer information
@@ -198,8 +205,7 @@ except NameError:
 
 # First, save the final dataframe as a CSV file
 # If CSV file is already written, append the new final dataframe to the existing CSV file
-# Change the file path for YOUR COMPUTER!
-if not path.exists('D:\Personal Projects\Personal Work\Diagnostic Process\CheckForm_Logs.csv'):
-    final_df.to_csv("D:\Personal Projects\Personal Work\Diagnostic Process\CheckForm_Logs.csv", header = "columns", index = False)
+if not path.exists(file_path):
+    final_df.to_csv(file_path, header = "columns", index = False)
 else:
-    final_df.to_csv("D:\Personal Projects\Personal Work\Diagnostic Process\CheckForm_Logs.csv", mode = 'a', header = False, index = False)
+    final_df.to_csv(file_path, mode = 'a', header = False, index = False)
