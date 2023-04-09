@@ -30,13 +30,18 @@ print(f"\n{first_df}")
 # Update the column value or data in the existing CSV
 # These categories hold the variables of what is typed from the technician
 while repeat.lower() == "yes":
-    
-    # Have the technician enter the row number
-    csv_row = int(input("\nWhich row is your column value in? (The header is not the first row & row number starts from 0): "))
-    
-    # Validate the csv_row input
-    while csv_row not in arr:
-        
+
+    try:
+        # Have the technician enter the row number
+        csv_row = int(input("\nWhich row is your column value in? (The header is not the first row & row number starts from 0): "))
+
+        # Validate the csv_row
+        if csv_row not in arr:
+
+            # Display an error, then get another input
+            csv_row = int(input("\nInvalid Choice.\nWhich row is your column value in? (The header is not the first row & row number starts from 0): "))
+            
+    except ValueError:
         # Display an error, then get another input
         csv_row = int(input("\nInvalid Choice.\nWhich row is your column value in? (The header is not the first row & row number starts from 0): "))
 
