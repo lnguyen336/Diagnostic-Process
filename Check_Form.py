@@ -198,6 +198,7 @@ except NameError:
 
 # First, save the final dataframe as a CSV file
 # If CSV file is already written, append the new final dataframe to the existing CSV file
+# Change the file path for YOUR COMPUTER!
 if not path.exists('D:\Personal Projects\Personal Work\Diagnostic Process\CheckForm_Logs.csv'):
     final_df.to_csv("D:\Personal Projects\Personal Work\Diagnostic Process\CheckForm_Logs.csv", header = "columns", index = False)
 else:
