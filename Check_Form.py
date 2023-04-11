@@ -2,210 +2,245 @@
 # Each category will have its own data type, converted to other types for calculations and such
 # Use the input function to get input from the keyboard
 
-# Import dependencies
+# Import Dependencies
 import pandas as pd
-import os
 from os import path
 
 # Print Title
 print("Technician Diagnostic Check-In Form!")
 
-# Variables to control the loops below
-repeat = "no"
-repeat_2 = "no"
-
-# Additional Variables
+# Additional Variables (Used in Functions)
 default = "N/A"
 default_2 = "TBA"
-file_name = "CheckForm_Logs.csv"
 
-# Replace the file path with your OWN file path on your PC
-file_path = f'D:\Personal Projects\Personal Work\Diagnostic Process\{file_name}'
+# Automatically find the full path of the file you wish to import into your code
+absolute_path = path.dirname(__file__)
+relative_path = "CheckForm_Logs.csv"
+full_path = path.join(absolute_path, relative_path)
 
-while repeat.lower() == "no":
-    # Customer Information Lists
-    name_list = []
-    company_list = []
-    cell_phone_list = []
-    other_phone_list = []
-    os_password_list = []
-    os_pin_list = []
-    zip_code_list = []
-    problem_list = []
-    initial_estimate_list = []
-    system_list = []
-    initial_customer_list = []
+# Asking for Yes/No Questions User Input
+# Depending on your answer, your final output can result in different outcomes
+ready_check = input("\nAre you ready to input the customer information? Enter 'yes' to begin: ")
+if ready_check.lower() == "yes":
+    client_check = input("Can you obtain customer information AND computer information? Enter 'yes' to move on, anything else to stay: ")
+    if client_check.lower() == "yes":
+        
+        # Function to obtain customer information 
+        def get_customer_input():
 
-    # Front Side of Check-In Form
-    # These categories hold the results of what is typed from the technician
-    # For each component of the customer information list, the inputs have the technician enter the information
-    # For each component of the customer information list, the inputs will be added to each component's list
-    Name = input(f"\nName: ") or default
-    name_list.append(Name)
+            # Variable to control the loop below
+            repeat = "no"
 
-    Company = input("Company: ") or default
-    company_list.append(Company)
+            while repeat.lower() == "no":
 
-    Cell_Phone_Number = input("Cell Phone Number: ") or default
-    cell_phone_list.append(Cell_Phone_Number)
+                # Make a list of customer information that will be entered
+                initial_customer_list = []
 
-    Other_Phone_Number = input("Other Phone Number: ") or default
-    other_phone_list.append(Other_Phone_Number)
+                # Have the technician enter the customer information for their check form log
+                initial_customer_list.append(input("\nName: ") or default)
+                initial_customer_list.append(input("Company: ") or default)
+                initial_customer_list.append(input("Cell Phone Number: ") or default)
+                initial_customer_list.append(input("Other Phone Number: ") or default)
+                initial_customer_list.append(input("Operating System Password: ") or default)
+                initial_customer_list.append(input("Operating System PIN: ") or default)
+                initial_customer_list.append(input("Zip Code: ") or default)
+                initial_customer_list.append(input("Problem: ") or default)
+                initial_customer_list.append(input("Initial Estimate of Cost: ") or default)
+                initial_customer_list.append(input("System (Brand & PC): ") or default)
 
-    OS_Password = input("Operating System Password: ") or default
-    os_password_list.append(OS_Password)
+                # Ask the technician to verify the customer information and redo the process if it is incorrect
+                repeat = input("\nIs the following information above correct?\n\nEnter 'no' to redo the customer information input, anything else to move on: ")
 
-    OS_Pin = input("Operating System PIN: ") or default
-    os_pin_list.append(OS_Pin)
+            # Send this function's result (initial_customer_list) to the caller function: get_customer_df()
+            return(initial_customer_list)
 
-    Zip_Code = input("Zip Code: ") or default
-    zip_code_list.append(Zip_Code)
+        # After obtaining the customer information, this function will create a customer info dataframe
+        def get_customer_df():
 
-    Problem = input("Problem: ") or default
-    problem_list.append(Problem)
+            # Use the value returned from get_customer_input() function inside get_customer_df() function
+            initial_customer_list = get_customer_input()
 
-    Initial_Estimate = (input("Initial Estimate of Cost: ")) or default
-    initial_estimate_list.append(Initial_Estimate)
-
-    System = input("System (Brand & PC): ") or default
-    system_list.append(System)
-
-    # Add each sublist element to the initial customer information input list 
-    for lst in (name_list, company_list, cell_phone_list, other_phone_list, os_password_list, os_pin_list, zip_code_list, 
-                problem_list, initial_estimate_list, system_list):
-        initial_customer_list.append(lst)
-
-    # Back Side of Check-In Form
-    # These categories hold the results of 'TBA' if the technician only obtained customer information
-
-    # Computer Specifications Lists
-    cpu_list = []
-    ram_list = []
-    os_list = []
-    storage_drive_list = []
-    security_soft_list = []
-    product_soft_list = []
-    system_issue_list = []
-    initial_check_list = []
-
-    # Add the default_2 value ("TBA") to these computer specification lists
-    cpu = default_2
-    cpu_list.append(cpu)
-
-    ram = default_2
-    ram_list.append(ram)
-
-    operate_system = default_2
-    os_list.append(operate_system)
-
-    storage_drives = default_2
-    storage_drive_list.append(storage_drives)
-
-    security_soft = default_2
-    security_soft_list.append(security_soft)
-
-    product_soft = default_2
-    product_soft_list.append(product_soft)
-
-    system_issue = default_2
-    system_issue_list.append(system_issue)
-
-    # Add each sublist element to the inital check form input list if the technician ONLY obtained customer information
-    for lst in (name_list, company_list, cell_phone_list, other_phone_list, os_password_list, os_pin_list, zip_code_list, 
-                problem_list, initial_estimate_list, system_list, cpu_list, ram_list, os_list, storage_drive_list, security_soft_list, 
-                product_soft_list, system_issue_list):
-        initial_check_list.append(lst)
-
-    # Ask the technician to verify the current customer information criteria
-    repeat = input("\nIs the following information above correct?\n\nEnter 'no' to redo the customer information input, anything else to move on: ")
-
-# If the technician obtained customer information and can turn on the computer and see the desktop screen, this dataframe will be merged with pc_info_df
-print(f"\nFinal Customer Information Table: ")
-customer_df = pd.DataFrame(initial_customer_list, index = ['Customer Name', 'Company', 'Cell Phone Number', 'Other Phone Number',
+            # Create dataframe from initial_customer_list and transpose the dataframe (rows are columns, columns are rows)
+            customer_df = pd.DataFrame(initial_customer_list, index = ['Customer Name', 'Company', 'Cell Phone Number', 'Other Phone Number',
                                                         'Login Password', 'Login PIN', 'Zip Code', 'Problem', 'Initial Estimate',
                                                         'System'])
-customer_info_df = customer_df.transpose()
+            customer_info_df = customer_df.transpose()
 
-# If the technician ONLY obtained customer information, there will only be one dataframe to work with
-client_info_df = pd.DataFrame(initial_check_list, index = ['Customer Name', 'Company', 'Cell Phone Number', 'Other Phone Number',
+            # Display the final customer information dataframe
+            print(f"\nFinal Customer Information Table: ")
+            print(customer_info_df)
+
+            # Send this function's result (customer_info_df) to the caller function: get_merge_df()
+            return(customer_info_df)
+        
+        # Store the result of this function in a variable (df_1)
+        df_1 = get_customer_df()
+        df_1
+
+        # Yes/No Question (If yes, technician will input computer information. If no, system prints message)
+        pc_check = input("\n\nCan you turn on the computer and see the desktop screen? Enter 'yes' to input the computer information: ")
+        if pc_check.lower() == "yes":
+
+            # Function to obtain computer information
+            def get_computer_input():
+
+                # Variable to control the loop below
+                repeat = "no"
+
+                while repeat.lower() == "no":
+
+                    # Make a list of computer information that will be entered
+                    initial_computer_list = []
+
+                    # Have the technician enter the computer information for their check form log
+                    initial_computer_list.append(input("\nCPU (Brand, Modifier, Generation, SKU, Product Line, Speed): ") or default)
+                    initial_computer_list.append(input("RAM (Total GB, Type of PC, Number of Slots): ") or default)
+                    initial_computer_list.append(input("Operating System (Name, Edition, Version, OS Build): ") or default)
+                    initial_computer_list.append(input("Storage Drives (Total Capacity, Type, Capacity Used, Partitions): ") or default)
+                    initial_computer_list.append(input("Security Software (Name, Edition): ") or default)
+                    initial_computer_list.append(input("Productivity Software (Name, Edition): ") or default)
+                    initial_computer_list.append(input("For Windows, list any device manager issues. \nFor MacOS, list any Settings issues. \nFor other OS, list the issues: ") or default)
+
+                    # Ask the technician to verify the customer information and redo the process if it is incorrect
+                    repeat = input("\nIs the following information above correct?\n\nEnter 'no' to redo the computer information input, anything else to move on: ")
+
+                # Send this function's result (initial_customer_list) to the caller function: get_computer_df()
+                return(initial_computer_list)
+
+            # After obtaining the computer information, this function will create a computer info dataframe
+            def get_computer_df():
+
+                # Use the value returned from get_computer_input() function inside get_computer_df() function
+                initial_computer_list = get_computer_input()
+
+                # Create dataframe from initial_computer_list and transpose the dataframe (rows are columns, columns are rows)
+                computer_df = pd.DataFrame(initial_computer_list, index = ['CPU', 'RAM', 'Operating System', 'Storage Drive Info', 'Security Software',
+                                                            'Productivity Software', 'System Issues'])
+                computer_info_df = computer_df.transpose()
+
+                # Display the final computer information dataframe
+                print(f"\nFinal Computer Information Table: ")
+                print(computer_info_df)
+
+                # Send this function's result (customer_info_df) to the caller function: get_merge_df()
+                return(computer_info_df)
+            
+            # Store the result of this function in a variable (df_2)
+            df_2 = get_computer_df()
+            df_2
+
+            # Function to concat the two dataframes from the functions: get_customer_df() and get_computer_df()
+            def get_concat_df():
+
+                # Create final dataframe from df_1 and df_2 (function stored results) inside get_concat_df() function
+                final_df = pd.concat([df_1, df_2], axis = "columns")
+
+                # Display the final check form log dataframe
+                print("\n\nFinal Information Table: ")
+                print(f'{final_df}')
+
+                # Send this function's result (final_df) to the caller function: save_df_as_csv()
+                return(final_df)
+            
+            # Store the result of this function in a variable (df_3)
+            df_3 = get_concat_df()
+            df_3
+
+        # Ends code program and prints message when technician doesn't enter the correct input for the pc_check user input YES/NO question
+        else:
+            print("\nYou said you can obtain both customer and computer information, so WHY did you NOT enter 'yes'?\nYou did not follow directions. Start Over!")
+
+    # If the technician can ONLY obtain customer information since the technician didn't enter the correct input for client_check user input YES/NO question
+    else:
+
+        # Function to obtain ONLY customer information
+        def get_all_input():
+
+            # Variable to control the loop below
+            repeat = "no"
+
+            while repeat.lower() == "no":
+
+                # Make a list of customer information that will be entered and computer information values will default to 'TBA'
+                initial_overall_list = []
+
+                # Have the technician enter the customer information while the computer information will be entered as 'TBA' for their check form log 
+                initial_overall_list.append(input("\nName: ") or default)
+                initial_overall_list.append(input("Company: ") or default)
+                initial_overall_list.append(input("Cell Phone Number: ") or default)
+                initial_overall_list.append(input("Other Phone Number: ") or default)
+                initial_overall_list.append(input("Operating System Password: ") or default)
+                initial_overall_list.append(input("Operating System PIN: ") or default)
+                initial_overall_list.append(input("Zip Code: ") or default)
+                initial_overall_list.append(input("Problem: ") or default)
+                initial_overall_list.append(input("Initial Estimate of Cost: ") or default)
+                initial_overall_list.append(input("System (Brand & PC): ") or default)
+                initial_overall_list.append(default_2)
+                initial_overall_list.append(default_2)
+                initial_overall_list.append(default_2)
+                initial_overall_list.append(default_2)
+                initial_overall_list.append(default_2)
+                initial_overall_list.append(default_2)
+                initial_overall_list.append(default_2)
+
+                # Ask the technician to verify all the information and redo the process if it is incorrect
+                repeat = input("\nIs the following information above correct?\n\nEnter 'no' to redo the customer information input, anything else to move on: ")
+
+            # Send this function's result (initial_overall_list) to the caller function: get_overall_df()
+            return(initial_overall_list)
+
+        # After obtaining the customer information and default computer information, this function will create a final dataframe
+        def get_overall_df():
+
+            # Use the value returned from get_all_input() function inside get_overall_df() function
+            initial_overall_list = get_all_input()
+
+            # Create dataframe from initial_overall_list and transpose the dataframe (rows are columns, columns are rows)
+            overall_df = pd.DataFrame(initial_overall_list, index = ['Customer Name', 'Company', 'Cell Phone Number', 'Other Phone Number',
                                                         'Login Password', 'Login PIN', 'Zip Code', 'Problem', 'Initial Estimate',
                                                         'System', 'CPU', 'RAM', 'Operating System', 'Storage Drive Info', 'Security Software',
                                                         'Productivity Software', 'System Issues'])
-check_info_df = client_info_df.transpose()
+            final_df = overall_df.transpose()
 
-# Display the final customer information input list as a dataframe
-print(customer_info_df)
+            # Display the final check form log dataframe
+            print(f"\nFinal Information Table: ")
+            print(final_df)
 
-# Ask the technician to verify that they can turn on the computer and see the desktop screen to input the computer information
-computer_check = input("\n\nCan you turn on the computer and see the desktop screen? Enter 'yes' to input the computer information: ")
-if computer_check.lower() == "yes":
-    while repeat_2.lower() == "no":
-        # Computer Specifications Lists
-        cpu_list = []
-        ram_list = []
-        os_list = []
-        storage_drive_list = []
-        security_soft_list = []
-        product_soft_list = []
-        system_issue_list = []
-        initial_computer_list = []
+            # Send this function's result (final_df) to the caller function: save_df_as_csv()
+            return(final_df)
+        
+        # Store the result of this function in a variable (df_4)
+        df_4 = get_overall_df()
+        df_4
 
-        # Back Side of Check-In Form
-        # These categories hold the results of what is typed from the technician
-        # For each component of the computer information list, the inputs have the technician enter the information
-        # For each component of the computer information list, the inputs will be added to each component's list
-        cpu = input(f"\nCPU (Brand, Modifier, Generation, SKU, Product Line, Speed): ") or default
-        cpu_list.append(cpu)
+# Function to save the final check log dataframe as a CSV file if the file yet exists
+# If the CSV file already exists, append the new final dataframe to the created CSV file
+def save_df_as_csv():
 
-        ram = input("RAM (Total GB, Type of PC, Number of Slots): ") or default
-        ram_list.append(ram)
+    # This try/except tests the block of code for errors and handles the errors
+    try:
+        # Execute this code block if the technician obtained customer and computer information
+        # df_3 is the stored result from the get_concat_df() function
+        if not path.exists(full_path):
+            df_3.to_csv(full_path, header = "Columns", index = False)
+        else:
+            df_3.to_csv(full_path, mode = 'a', header = False, index = False)
+    except:
+        # Execute this code block if the technician obtained ONLY customer information
+        # df_4 is the stored result from the get_overall_df() function
+        if not path.exists(full_path):
+            df_4.to_csv(full_path, header = "Columns", index = False)
+        else:
+            df_4.to_csv(full_path, mode = 'a', header = False, index = False)
 
-        operate_system = input("Operating System (Name, Edition, Version, OS Build): ") or default
-        os_list.append(operate_system)
+    # Loads the created/existing CSV file into a dataframe
+    df = pd.read_csv(full_path)
 
-        storage_drives = input("Storage Drives (Total Capacity, Type, Capacity Used, Partitions): ") or default
-        storage_drive_list.append(storage_drives)
+    # Display the new final dataframe in the created/existing CSV file
+    print(f'\n\nUpdated CSV DataFrame: ')
+    print(f'{df}')
 
-        security_soft = input("Security Software (Name, Edition): ") or default
-        security_soft_list.append(security_soft)
-
-        product_soft = input("Productivity Software (Name, Edition): ") or default
-        product_soft_list.append(product_soft)
-
-        system_issue = input("\nFor Windows, list any device manager issues. \nFor MacOS, list any Settings issues. \nFor other OS, list the issues: ") or default
-        system_issue_list.append(system_issue)
-
-        # Add each sublist element to the initial computer specifications input list
-        for lst in (cpu_list, ram_list, os_list, storage_drive_list, security_soft_list, 
-                    product_soft_list, system_issue_list):
-            initial_computer_list.append(lst)
-
-        # Ask the technician to verify the current computer specifications criteria
-        repeat_2 = input("\nIs the following information above correct?\n\nEnter 'no' to redo the computer information input, anything else to move on: ")
-
-    # If the technician obtained customer information and can turn on the computer and see the desktop screen, this dataframe will be merged with customer_info_df
-    print("\nFinal Computer Information Table: ")
-    computer_info_df = pd.DataFrame(initial_computer_list, index = ['CPU', 'RAM', 'Operating System', 'Storage Drive Info', 'Security Software',
-                                                            'Productivity Software', 'System Issues'])
-    pc_info_df = computer_info_df.transpose()
-
-    # Display the final computer information input list as a dataframe
-    print(pc_info_df)
-
-# Merge the two dataframes if the technician obtained the customer information and computer information
-# If not, the final dataframe will just be the customer information with computer information as 'TBA'
-try:
-    final_df = pd.concat([customer_info_df, pc_info_df], axis = "columns")
-    print("\n\nFinal DataFrame: ")
-    print(f'{final_df}')
-except NameError:
-    print("\n\nFinal DataFrame: ")
-    final_df = check_info_df
-    print(f'{final_df}')
-
-# First, save the final dataframe as a CSV file
-# If CSV file is already written, append the new final dataframe to the existing CSV file
-if not path.exists(file_path):
-    final_df.to_csv(file_path, header = "columns", index = False)
-else:
-    final_df.to_csv(file_path, mode = 'a', header = False, index = False)
+# Store the result of this function in a variable (save_df)
+# I don't see a purpose in storing it, but who knows?!
+save_df = save_df_as_csv()
+save_df
